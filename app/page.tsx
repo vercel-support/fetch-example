@@ -1,12 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-export const revalidate = 86400
+export const revalidate = 10
 
 async function fetchTemplateData() {
   console.log("[v0] === SERVER-SIDE ISR FETCH STARTED ===")
   console.log("[v0] Request time:", new Date().toISOString())
   console.log("[v0] Deployment Region: ICN1 (Seoul)")
-  console.log("[v0] Revalidate interval: 86400 seconds (24 hours)")
+  console.log("[v0] Revalidate interval: 10 seconds")
 
   const url = "https://api.aistudio.dropshot.io/v1/template"
   console.log("[v0] Target URL:", url)
@@ -18,7 +18,7 @@ async function fetchTemplateData() {
       headers: {
         Accept: "application/json",
       },
-      next: { revalidate: 86400 }, // ISR cache configuration
+      next: { revalidate: 10 },
     })
 
     console.log("[v0] === RESPONSE RECEIVED ===")
@@ -86,7 +86,9 @@ export default async function FetchExample() {
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle>ISR Fetch API Example</CardTitle>
-          <CardDescription>Data from api.aistudio.dropshot.io/v1/template (Revalidates every 24 hours)</CardDescription>
+          <CardDescription>
+            Data from api.aistudio.dropshot.io/v1/template (Revalidates every 10 seconds)
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="p-3 bg-muted rounded-md text-sm space-y-1">
@@ -94,7 +96,7 @@ export default async function FetchExample() {
               <span className="font-medium">Region:</span> ICN1 (Seoul)
             </p>
             <p>
-              <span className="font-medium">Revalidation:</span> 86400 seconds (24 hours)
+              <span className="font-medium">Revalidation:</span> 10 seconds
             </p>
             <p>
               <span className="font-medium">Last fetched:</span> {new Date().toISOString()}
